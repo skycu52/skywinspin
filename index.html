@@ -10,13 +10,9 @@
     <meta name="author" content="WrapTheme, design by: ThemeMakker.com">
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <!-- VENDOR CSS -->
     <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
-    
 
-
-    <!-- Spin Board CSS & JS -->
     <link rel="stylesheet" href="/css/spinBoard/style.css" />
     <script type="text/javascript" src="/js/spinBoard/Winwheel.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
@@ -26,7 +22,6 @@
 
 <body>
 
-    
 <div align="center" class="flexbkg">
     <div class="cover-container d-flex w-100 p-3 mx-auto flex-column">
         <div role="main" class="inner cover" style="zoom: 0.8;">
@@ -38,6 +33,7 @@
                     <div class="signboard mx-auto">
                         <img src="/images/spinBoard/signboard.png" />
                     </div>
+                </div>
             </section>
             <div class="wheelbkg">
                 <div class="wheelpointer"><img src="/images/spinBoard/pin.png" /></div>
@@ -47,10 +43,26 @@
                 </canvas>
                 <a href="#" id="spinbutton" class="active animate__animated animate__pulse animate__infinite"></a>
             </div>
-
         </div>
     </div>
 
+    <div class="latest-rewards-box" style="width: 90%; max-width: 400px; margin: 15px auto; background: #0d1b1e; border: 2px solid #ffe600; border-radius: 8px; overflow: hidden; position: relative; z-index: 10;">
+        <div style="background: #ffe600; color: #000; font-weight: bold; text-align: center; padding: 8px; font-size: 14px;">Latest Claimed Rewards</div>
+        <div style="padding: 5px 10px;">
+            <div style="display: flex; justify-content: space-between; padding: 8px 5px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); font-size: 13px; color: #fff;">
+                <span>6QxXZ87t</span><span style="color: #ffe600; font-weight: bold;">Free Credit RM17</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 8px 5px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); font-size: 13px; color: #fff;">
+                <span>jspBPQKu</span><span style="color: #ffe600; font-weight: bold;">Free Credit RM17</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 8px 5px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); font-size: 13px; color: #fff;">
+                <span>jspBPQKu</span><span style="color: #ffe600; font-weight: bold;">Free Credit RM27</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 8px 5px; font-size: 13px; color: #fff;">
+                <span>jspBPQKu</span><span style="color: #ffe600; font-weight: bold;">Free Credit RM10</span>
+            </div>
+        </div>
+    </div>
 
     <section class="howtoplay">
         <div class="container">
@@ -96,7 +108,6 @@
 
     <div id="prize" class="wrapper animate__animated animate__bounceIn hide">
         <a href="#" id="closeprize"></a>
-
         <div class="reward-container">
             <h2 id="usercode"></h2>
             <br/>
@@ -108,7 +119,6 @@
         </div>
     </div>
 
-    <!-- code Modal -->
     <div class="modal fade" id="modalone" tabindex="-1" role="dialog" aria-labelledby="modalcode" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -126,23 +136,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary btn-block" id="playbutton">Play Now</button>
-                    <div class="latest-rewards-box" style="width: 90%; max-width: 400px; margin: 15px auto; background: #0d1b1e; border: 2px solid #ffe600; border-radius: 8px; overflow: hidden;">
-    <div style="background: #ffe600; color: #000; font-weight: bold; text-align: center; padding: 8px; font-size: 14px;">Latest Claimed Rewards</div>
-    <div style="padding: 5px 10px;">
-        <div style="display: flex; justify-content: space-between; padding: 8px 5px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); font-size: 13px; color: #fff;">
-            <span>6QxXZ87t</span><span style="color: #ffe600; font-weight: bold;">Free Credit RM17</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; padding: 8px 5px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); font-size: 13px; color: #fff;">
-            <span>jspBPQKu</span><span style="color: #ffe600; font-weight: bold;">Free Credit RM17</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; padding: 8px 5px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); font-size: 13px; color: #fff;">
-            <span>jspBPQKu</span><span style="color: #ffe600; font-weight: bold;">Free Credit RM27</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; padding: 8px 5px; font-size: 13px; color: #fff;">
-            <span>jspBPQKu</span><span style="color: #ffe600; font-weight: bold;">Free Credit RM10</span>
-        </div>
-    </div>
-</div>
                 </div>
             </div>
         </div>
@@ -150,27 +143,19 @@
 </div>
 
 <script type="text/javascript">
-    // Serialize the model data to JSON and assign it to a JavaScript variable
     var modelData = [{"rewarD_ID":"45","rewarD_TITLE":"RM9 CREDIT","reC_TYPE":"1","probability":null},{"rewarD_ID":"46","rewarD_TITLE":"RM50 GET RM66","reC_TYPE":"1","probability":null},{"rewarD_ID":"47","rewarD_TITLE":"RM28 CREDIT","reC_TYPE":"1","probability":null},{"rewarD_ID":"48","rewarD_TITLE":"BONUS 20%","reC_TYPE":"1","probability":null},{"rewarD_ID":"49","rewarD_TITLE":"RM68 CREDIT","reC_TYPE":"1","probability":null},{"rewarD_ID":"50","rewarD_TITLE":"LAST DEPOSIT 20%","reC_TYPE":"1","probability":null},{"rewarD_ID":"51","rewarD_TITLE":"CASH RM288","reC_TYPE":"1","probability":null},{"rewarD_ID":"52","rewarD_TITLE":"RM128 CREDIT","reC_TYPE":"1","probability":null}];
 
     $('.flexbkg').css('background-image', 'url("/images/spinBoard/background.jpg")');
     $('.cover-container').css('background-image', 'url("/images/spinBoard/stage.png")');
 </script>
 
+<script src="/bundles/libscripts.bundle.js"></script>
+<script src="/bundles/vendorscripts.bundle.js"></script>
+<script src="/bundles/mainscripts.bundle.js"></script>
 
-
-    <!-- Javascript -->
-    <script src="/bundles/libscripts.bundle.js"></script>
-    <script src="/bundles/vendorscripts.bundle.js"></script>
-
-    <script src="/bundles/mainscripts.bundle.js"></script>
-
-
-    <!-- Spin Board JS -->
-    <script src="/js/spinBoard/popper.min.js"></script>
-    
-    <script src="/js/spinBoard/script.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+<script src="/js/spinBoard/popper.min.js"></script>
+<script src="/js/spinBoard/script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
 
 </body>
 </html>
