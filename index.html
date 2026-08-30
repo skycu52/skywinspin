@@ -47,7 +47,6 @@
         </div>
     </div>
 
-    <!-- 中奖列表：完美贴在转盘下方，绝不遮挡按钮 -->
     <div class="latest-rewards-box" style="width: 85%; max-width: 360px; margin: 20px auto; background: #0d1b1e; border: 2px solid #ffe600; border-radius: 8px; overflow: hidden; position: relative; z-index: 10; box-shadow: 0 0 15px rgba(255,230,0,0.4);">
         <div style="background: #ffe600; color: #000; font-weight: bold; text-align: center; padding: 6px; font-size: 13px; letter-spacing: 0.5px;">Latest Claimed Rewards</div>
         <div style="padding: 4px 8px;">
@@ -186,6 +185,16 @@ function maskCode(code) {
     return code.substring(0, 2) + "***" + code.substring(code.length - 2);
 }
 
+// 核心修改：根据输入的兑换码字符串计算出一个固定的索引，确保“同一个码”永远对应“同一个奖品”
+function getFixedPrizeForCode(code) {
+    let hash = 0;
+    for (let i = 0; i < code.length; i++) {
+        hash = code.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const index = Math.abs(hash) % wheelPrizes.length;
+    return wheelPrizes[index];
+}
+
 function saveRewardsToStorage() {
     let rowsData = [];
     for (let i = 0; i < 4; i++) {
@@ -204,67 +213,4 @@ function loadRewardsFromStorage() {
             for (let i = 0; i < rowsData.length; i++) {
                 if (document.querySelector(`#row-${i} .c-code`)) {
                     document.querySelector(`#row-${i} .c-code`).innerText = rowsData[i].code;
-                    document.querySelector(`#row-${i} .c-prize`).innerText = rowsData[i].prize;
-                }
-            }
-        } catch (e) {
-            console.error(e);
-        }
-    }
-}
-
-function addNewRewardToTop(rawCode, prizeName) {
-    const masked = maskCode(rawCode);
-
-    for (let i = 3; i > 0; i--) {
-        const prevCode = document.querySelector(`#row-${i-1} .c-code`).innerText;
-        const prevPrize = document.querySelector(`#row-${i-1} .c-prize`).innerText;
-        document.querySelector(`#row-${i} .c-code`).innerText = prevCode;
-        document.querySelector(`#row-${i} .c-prize`).innerText = prevPrize;
-    }
-
-    document.querySelector('#row-0 .c-code').innerText = masked;
-    document.querySelector('#row-0 .c-prize').innerText = prizeName;
-
-    saveRewardsToStorage();
-}
-
-// 15分钟自动随机滚动
-const intervalTime = 15 * 60 * 1000; 
-setInterval(() => {
-    const randomPrize = wheelPrizes[Math.floor(Math.random() * wheelPrizes.length)];
-    addNewRewardToTop(generateRandomCode(), randomPrize);
-}, intervalTime);
-
-// 精准抓取弹窗中的真实奖品和码
-$(document).ready(function() {
-    loadRewardsFromStorage();
-
-    const prizeModal = document.getElementById('prize');
-    if (prizeModal) {
-        const observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                if (mutation.attributeName === "class" && !prizeModal.classList.contains('hide')) {
-                    setTimeout(() => {
-                        let rawCode = $('#usercode').text().trim();
-                        if (rawCode.includes('-')) {
-                            rawCode = rawCode.split('-').pop().trim();
-                        }
-                        const finalCode = rawCode || generateRandomCode();
-
-                        // 完美清洗 #reward-title，去掉多余的感叹号和空格，确保和真实奖品对齐
-                        let rawTitle = $('#reward-title').text().trim().replace(/!/g, '').trim();
-                        let matchedPrize = wheelPrizes.find(p => rawTitle.toUpperCase().includes(p.toUpperCase())) || rawTitle || wheelPrizes[0];
-
-                        addNewRewardToTop(finalCode, matchedPrize);
-                    }, 100);
-                }
-            });
-        });
-        observer.observe(prizeModal, { attributes: true });
-    }
-});
-</script>
-
-</body>
-</html>
+                    document.querySelector(`#row-${i}
