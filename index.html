@@ -47,7 +47,7 @@
         </div>
     </div>
 
-    <!-- 【已移到转盘外部下方】完美避开按钮，绝不遮挡 -->
+    <!-- 中奖列表：完美贴在转盘下方，绝不遮挡按钮 -->
     <div class="latest-rewards-box" style="width: 85%; max-width: 360px; margin: 20px auto; background: #0d1b1e; border: 2px solid #ffe600; border-radius: 8px; overflow: hidden; position: relative; z-index: 10; box-shadow: 0 0 15px rgba(255,230,0,0.4);">
         <div style="background: #ffe600; color: #000; font-weight: bold; text-align: center; padding: 6px; font-size: 13px; letter-spacing: 0.5px;">Latest Claimed Rewards</div>
         <div style="padding: 4px 8px;">
@@ -158,7 +158,9 @@
 <script src="/js/spinBoard/popper.min.js"></script>
 <script src="/js/spinBoard/script.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+
 <script>
+// 8个真实的转盘奖品
 const wheelPrizes = [
     "RM9 CREDIT",
     "RM50 GET RM66",
@@ -170,6 +172,7 @@ const wheelPrizes = [
     "RM128 CREDIT"
 ];
 
+// 随机生成假兑换码
 function generateRandomCode() {
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     let code = "";
@@ -179,10 +182,16 @@ function generateRandomCode() {
     return code;
 }
 
-function updateLatestRewards() {
-    const randomPrize = wheelPrizes[Math.floor(Math.random() * wheelPrizes.length)];
-    const rawCode = generateRandomCode();
-    const maskedCode = rawCode.substring(0, 2) + "***" + rawCode.substring(5);
+// 兑换码打码处理（如 ab***gh）
+function maskCode(code) {
+    if (!code || code.length < 4) return "User***88";
+    if (code.length <= 4) return code.substring(0, 1) + "***" + code.substring(code.length - 1);
+    return code.substring(0, 2) + "***" + code.substring(code.length - 2);
+}
+
+// 将最新中奖记录推到表格第一行，旧数据往下滚动
+function addNewRewardToTop(rawCode, prizeName) {
+    const masked = maskCode(rawCode);
 
     for (let i = 3; i > 0; i--) {
         const prevCode = document.querySelector(`#row-${i-1} .c-code`).innerText;
@@ -191,12 +200,27 @@ function updateLatestRewards() {
         document.querySelector(`#row-${i} .c-prize`).innerText = prevPrize;
     }
 
-    document.querySelector('#row-0 .c-code').innerText = maskedCode;
-    document.querySelector('#row-0 .c-prize').innerText = randomPrize;
+    document.querySelector('#row-0 .c-code').innerText = masked;
+    document.querySelector('#row-0 .c-prize').innerText = prizeName;
 }
 
+// 1. 定时任务：每隔 15 分钟自动随机滚动一条
 const intervalTime = 15 * 60 * 1000; 
-setInterval(updateLatestRewards, intervalTime);
+setInterval(() => {
+    const randomPrize = wheelPrizes[Math.floor(Math.random() * wheelPrizes.length)];
+    addNewRewardToTop(generateRandomCode(), randomPrize);
+}, intervalTime);
+
+// 2. 交互捕获：点击 Play Now 时，立即把你输入的码显示在第一行
+$(document).ready(function() {
+    $('#playbutton').on('click', function() {
+        const userEnteredCode = $('#inputcode').val().trim();
+        if (userEnteredCode) {
+            const winningPrize = wheelPrizes[Math.floor(Math.random() * wheelPrizes.length)];
+            addNewRewardToTop(userEnteredCode, winningPrize);
+        }
+    });
+});
 </script>
 
 </body>
