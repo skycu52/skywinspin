@@ -15,7 +15,7 @@ body {
     background-image: url(../../images/spinBoard/background.jpg);
     background-repeat: no-repeat;
     background-position: center top;
-    background-size: 1400px;
+    background-size: cover;
     width: 100%
 }
 
