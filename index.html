@@ -47,7 +47,6 @@
         </div>
     </div>
 
-    <!-- 中奖列表：完整显示兑换码与奖品 -->
     <div class="latest-rewards-box" style="width: 85%; max-width: 360px; margin: 20px auto; background: #0d1b1e; border: 2px solid #ffe600; border-radius: 8px; overflow: hidden; position: relative; z-index: 10; box-shadow: 0 0 15px rgba(255,230,0,0.4);">
         <div style="background: #ffe600; color: #000; font-weight: bold; text-align: center; padding: 6px; font-size: 13px; letter-spacing: 0.5px;">Latest Claimed Rewards</div>
         <div style="padding: 4px 8px;">
@@ -180,7 +179,6 @@ function generateRandomCode() {
     return code;
 }
 
-// 对应固定的哈希算法，确保同一个码永远对应同一个奖品
 function getFixedPrizeForCode(code) {
     let hash = 0;
     for (let i = 0; i < code.length; i++) {
@@ -218,7 +216,6 @@ function loadRewardsFromStorage() {
 }
 
 function addNewRewardToTop(rawCode, prizeName) {
-    // 直接使用原始完整的兑换码，不再进行打码裁剪
     const fullCode = rawCode;
 
     for (let i = 3; i > 0; i--) {
@@ -234,15 +231,38 @@ function addNewRewardToTop(rawCode, prizeName) {
     saveRewardsToStorage();
 }
 
+// 用一个专属记忆表（内存+缓存）来锁定“同一个码=同一个奖品”，彻底解决乱跳问题
+const codePrizeMemory = JSON.parse(localStorage.getItem('code_prize_memory') || '{}');
+
+function getLockedPrize(code, popupTitle) {
+    if (codePrizeMemory[code]) {
+        return codePrizeMemory[code]; // 如果这个码之前转过，直接返回它锁定的奖品
+    }
+    
+    // 否则优先用弹窗里抓到的真实奖品，如果没抓到则用哈希算出一个
+    let finalPrize = wheelPrizes[0];
+    if (popupTitle) {
+        let matched = wheelPrizes.find(p => popupTitle.toUpperCase().includes(p.toUpperCase()));
+        if (matched) finalPrize = matched;
+    }
+    if (!finalPrize) {
+        finalPrize = getFixedPrizeForCode(code);
+    }
+
+    codePrizeMemory[code] = finalPrize;
+    localStorage.setItem('code_prize_memory', JSON.stringify(codePrizeMemory));
+    return finalPrize;
+}
+
 // 15分钟自动随机滚动
 const intervalTime = 15 * 60 * 1000; 
 setInterval(() => {
     const randomCode = generateRandomCode();
-    const randomPrize = getFixedPrizeForCode(randomCode);
+    const randomPrize = getLockedPrize(randomCode, null);
     addNewRewardToTop(randomCode, randomPrize);
 }, intervalTime);
 
-// 绑定抓取逻辑
+// 绑定抓取逻辑，并对同一个码进行“记忆锁定”
 $(document).ready(function() {
     loadRewardsFromStorage();
 
@@ -258,10 +278,12 @@ $(document).ready(function() {
                         }
                         const finalCode = rawCode || generateRandomCode();
 
-                        // 关联固定奖品，杜绝乱跳
-                        const fixedPrize = getFixedPrizeForCode(finalCode);
+                        const popupTitle = $('#reward-title').text().trim();
                         
-                        addNewRewardToTop(finalCode, fixedPrize);
+                        // 获取被锁定的唯一奖品
+                        const lockedPrize = getLockedPrize(finalCode, popupTitle);
+                        
+                        addNewRewardToTop(finalCode, lockedPrize);
                     }, 100);
                 }
             });
