@@ -35,49 +35,34 @@
                     </div>
                 </div>
             </section>
-<div class="wheelbkg" style="position: relative; text-align: center;">
-    <div class="wheelpointer"><img src="/images/spinBoard/pin.png" /></div>
-    <div class="spinbrand"><img src="/images/spinBoard/imgspinbrand.png" /></div>
-    <canvas id="canvas" width="380" height="380">
-        <p style="{color: white}" align="center">Sorry, your browser doesn't support canvas. Please try another.</p>
-    </canvas>
-    <a href="#" id="spinbutton" class="active animate__animated animate__pulse animate__infinite"></a>
+            
+            <div class="wheelbkg" style="position: relative; text-align: center;">
+                <div class="wheelpointer"><img src="/images/spinBoard/pin.png" /></div>
+                <div class="spinbrand"><img src="/images/spinBoard/imgspinbrand.png" /></div>
+                <canvas id="canvas" width="380" height="380">
+                    <p style="{color: white}" align="center">Sorry, your browser doesn't support canvas. Please try another.</p>
+                </canvas>
+                <a href="#" id="spinbutton" class="active animate__animated animate__pulse animate__infinite"></a>
 
-    <!-- 【把中奖列表直接放在这里，强制显示】 -->
-    <div class="latest-rewards-box" style="width: 85%; max-width: 360px; margin: 10px auto 0 auto; background: #0d1b1e; border: 2px solid #ffe600; border-radius: 8px; overflow: hidden; position: relative; z-index: 99; box-shadow: 0 0 15px rgba(255,230,0,0.4);">
-        <div style="background: #ffe600; color: #000; font-weight: bold; text-align: center; padding: 6px; font-size: 13px; letter-spacing: 0.5px;">Latest Claimed Rewards</div>
-        <div style="padding: 4px 8px;">
-            <div style="display: flex; justify-content: space-between; padding: 6px 4px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); font-size: 12px; color: #fff;">
-                <span>6QxXZ87t</span><span style="color: #ffe600; font-weight: bold;">Free Credit RM17</span>
+                <div class="latest-rewards-box" style="width: 85%; max-width: 360px; margin: 10px auto 0 auto; background: #0d1b1e; border: 2px solid #ffe600; border-radius: 8px; overflow: hidden; position: relative; z-index: 99; box-shadow: 0 0 15px rgba(255,230,0,0.4);">
+                    <div style="background: #ffe600; color: #000; font-weight: bold; text-align: center; padding: 6px; font-size: 13px; letter-spacing: 0.5px;">Latest Claimed Rewards</div>
+                    <div style="padding: 4px 8px;">
+                        <div id="row-0" style="display: flex; justify-content: space-between; padding: 6px 4px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); font-size: 12px; color: #fff;">
+                            <span class="c-code">6QxXZ87t</span><span class="c-prize" style="color: #ffe600; font-weight: bold;">RM9 CREDIT</span>
+                        </div>
+                        <div id="row-1" style="display: flex; justify-content: space-between; padding: 6px 4px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); font-size: 12px; color: #fff;">
+                            <span class="c-code">jspBPQKu</span><span class="c-prize" style="color: #ffe600; font-weight: bold;">RM50 GET RM66</span>
+                        </div>
+                        <div id="row-2" style="display: flex; justify-content: space-between; padding: 6px 4px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); font-size: 12px; color: #fff;">
+                            <span class="c-code">mK9pW2x</span><span class="c-prize" style="color: #ffe600; font-weight: bold;">RM28 CREDIT</span>
+                        </div>
+                        <div id="row-3" style="display: flex; justify-content: space-between; padding: 6px 4px; font-size: 12px; color: #fff;">
+                            <span class="c-code">8XyL41q</span><span class="c-prize" style="color: #ffe600; font-weight: bold;">BONUS 20%</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div style="display: flex; justify-content: space-between; padding: 6px 4px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); font-size: 12px; color: #fff;">
-                <span>jspBPQKu</span><span style="color: #ffe600; font-weight: bold;">Free Credit RM17</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; padding: 6px 4px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); font-size: 12px; color: #fff;">
-                <span>jspBPQKu</span><span style="color: #ffe600; font-weight: bold;">Free Credit RM27</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; padding: 6px 4px; font-size: 12px; color: #fff;">
-                <span>jspBPQKu</span><span style="color: #ffe600; font-weight: bold;">Free Credit RM10</span>
-            </div>
-        </div>
-    </div>
-</div>
 
-    <div class="latest-rewards-box" style="width: 90%; max-width: 400px; margin: 15px auto; background: #0d1b1e; border: 2px solid #ffe600; border-radius: 8px; overflow: hidden; position: relative; z-index: 10;">
-        <div style="background: #ffe600; color: #000; font-weight: bold; text-align: center; padding: 8px; font-size: 14px;">Latest Claimed Rewards</div>
-        <div style="padding: 5px 10px;">
-            <div style="display: flex; justify-content: space-between; padding: 8px 5px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); font-size: 13px; color: #fff;">
-                <span>6QxXZ87t</span><span style="color: #ffe600; font-weight: bold;">Free Credit RM17</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; padding: 8px 5px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); font-size: 13px; color: #fff;">
-                <span>jspBPQKu</span><span style="color: #ffe600; font-weight: bold;">Free Credit RM17</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; padding: 8px 5px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); font-size: 13px; color: #fff;">
-                <span>jspBPQKu</span><span style="color: #ffe600; font-weight: bold;">Free Credit RM27</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; padding: 8px 5px; font-size: 13px; color: #fff;">
-                <span>jspBPQKu</span><span style="color: #ffe600; font-weight: bold;">Free Credit RM10</span>
-            </div>
         </div>
     </div>
 
