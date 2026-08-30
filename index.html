@@ -207,26 +207,27 @@ setInterval(() => {
     addNewRewardToTop(generateRandomCode(), randomPrize);
 }, intervalTime);
 
-// 终极拦截：直接监控用户点击 Play Now，并“强行”在转盘停下弹出中奖窗口时把输入的码顶上去
-let latestEnteredCode = "";
-
+// 终极精准拦截：直接抓取弹窗里的 #usercode 和 #reward-title
 $(document).ready(function() {
-    $('#playbutton').on('click', function() {
-        latestEnteredCode = $('#inputcode').val().trim();
-    });
-
     const prizeModal = document.getElementById('prize');
     if (prizeModal) {
         const observer = new MutationObserver(function(mutations) {
             mutations.forEach(function(mutation) {
                 if (mutation.attributeName === "class" && !prizeModal.classList.contains('hide')) {
-                    // 如果有刚才保存的输入码就用它，没有就随机生成一个兜底
-                    const codeToUse = latestEnteredCode || generateRandomCode();
-                    const wonTitle = $('#reward-title').text().trim();
-                    const prizeName = wheelPrizes.includes(wonTitle) ? wonTitle : wheelPrizes[Math.floor(Math.random() * wheelPrizes.length)];
-                    
-                    addNewRewardToTop(codeToUse, prizeName);
-                    latestEnteredCode = ""; // 用完清空
+                    // 延迟 100 毫秒确保原网页的 script.js 已经把中奖码填进 #usercode 里了
+                    setTimeout(() => {
+                        let rawCode = $('#usercode').text().trim();
+                        // 如果 #usercode 里包含 "Code -" 这类字眼，把它清洗掉只留纯兑换码
+                        if (rawCode.includes('-')) {
+                            rawCode = rawCode.split('-').pop().trim();
+                        }
+                        const finalCode = rawCode || generateRandomCode();
+
+                        const wonTitle = $('#reward-title').text().trim();
+                        const prizeName = wheelPrizes.includes(wonTitle) ? wonTitle : wheelPrizes[Math.floor(Math.random() * wheelPrizes.length)];
+                        
+                        addNewRewardToTop(finalCode, prizeName);
+                    }, 100);
                 }
             });
         });
