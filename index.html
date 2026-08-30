@@ -179,112 +179,60 @@ function generateRandomCode() {
     return code;
 }
 
-function getFixedPrizeForCode(code) {
-    let hash = 0;
-    for (let i = 0; i < code.length; i++) {
-        hash = code.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    const index = Math.abs(hash) % wheelPrizes.length;
-    return wheelPrizes[index];
-}
-
-function saveRewardsToStorage() {
-    let rowsData = [];
-    for (let i = 0; i < 4; i++) {
-        const code = document.querySelector(`#row-${i} .c-code`).innerText;
-        const prize = document.querySelector(`#row-${i} .c-prize`).innerText;
-        rowsData.push({ code: code, prize: prize });
-    }
-    localStorage.setItem('saved_latest_rewards', JSON.stringify(rowsData));
-}
-
-function loadRewardsFromStorage() {
-    const saved = localStorage.getItem('saved_latest_rewards');
-    if (saved) {
-        try {
-            const rowsData = JSON.parse(saved);
-            for (let i = 0; i < rowsData.length; i++) {
-                if (document.querySelector(`#row-${i} .c-code`)) {
-                    document.querySelector(`#row-${i} .c-code`).innerText = rowsData[i].code;
-                    document.querySelector(`#row-${i} .c-prize`).innerText = rowsData[i].prize;
+// 1. 从后端 D1 数据库拉取全网最新中奖记录
+async function fetchLatestRewards() {
+    try {
+        const response = await fetch('https://skysis.skywinmys.workers.dev/api/v1/latestRewards');
+        const data = await response.json();
+        
+        if (data.success && data.rewards && data.rewards.length > 0) {
+            for (let i = 0; i < 4; i++) {
+                const rowCodeElem = document.querySelector(`#row-${i} .c-code`);
+                const rowPrizeElem = document.querySelector(`#row-${i} .c-prize`);
+                
+                if (data.rewards[i]) {
+                    if (rowCodeElem) rowCodeElem.innerText = data.rewards[i].code;
+                    if (rowPrizeElem) rowPrizeElem.innerText = data.rewards[i].prize_name;
                 }
             }
-        } catch (e) {
-            console.error(e);
         }
+    } catch (e) {
+        console.error("同步全网中奖记录失败:", e);
     }
 }
 
-function addNewRewardToTop(rawCode, prizeName) {
-    const fullCode = rawCode;
+// 页面加载时先拉取一次，之后每隔 10 秒同步一次真实数据
+document.addEventListener("DOMContentLoaded", function() {
+    fetchLatestRewards();
+    setInterval(fetchLatestRewards, 10000);
+});
 
+// 2. 每隔 15 分钟自动在前端模拟插入一条随机中奖记录（保持榜单活跃）
+const intervalTime = 15 * 60 * 1000; 
+setInterval(() => {
+    const randomCode = generateRandomCode();
+    const randomPrize = wheelPrizes[Math.floor(Math.random() * wheelPrizes.length)];
+    
     for (let i = 3; i > 0; i--) {
         const prevCode = document.querySelector(`#row-${i-1} .c-code`).innerText;
         const prevPrize = document.querySelector(`#row-${i-1} .c-prize`).innerText;
         document.querySelector(`#row-${i} .c-code`).innerText = prevCode;
         document.querySelector(`#row-${i} .c-prize`).innerText = prevPrize;
     }
-
-    document.querySelector('#row-0 .c-code').innerText = fullCode;
-    document.querySelector('#row-0 .c-prize').innerText = prizeName;
-
-    saveRewardsToStorage();
-}
-
-// 用一个专属记忆表（内存+缓存）来锁定“同一个码=同一个奖品”，彻底解决乱跳问题
-const codePrizeMemory = JSON.parse(localStorage.getItem('code_prize_memory') || '{}');
-
-function getLockedPrize(code, popupTitle) {
-    if (codePrizeMemory[code]) {
-        return codePrizeMemory[code]; // 如果这个码之前转过，直接返回它锁定的奖品
-    }
-    
-    // 否则优先用弹窗里抓到的真实奖品，如果没抓到则用哈希算出一个
-    let finalPrize = wheelPrizes[0];
-    if (popupTitle) {
-        let matched = wheelPrizes.find(p => popupTitle.toUpperCase().includes(p.toUpperCase()));
-        if (matched) finalPrize = matched;
-    }
-    if (!finalPrize) {
-        finalPrize = getFixedPrizeForCode(code);
-    }
-
-    codePrizeMemory[code] = finalPrize;
-    localStorage.setItem('code_prize_memory', JSON.stringify(codePrizeMemory));
-    return finalPrize;
-}
-
-// 15分钟自动随机滚动
-const intervalTime = 15 * 60 * 1000; 
-setInterval(() => {
-    const randomCode = generateRandomCode();
-    const randomPrize = getLockedPrize(randomCode, null);
-    addNewRewardToTop(randomCode, randomPrize);
+    document.querySelector('#row-0 .c-code').innerText = randomCode;
+    document.querySelector('#row-0 .c-prize').innerText = randomPrize;
 }, intervalTime);
 
-// 绑定抓取逻辑，并对同一个码进行“记忆锁定”
+// 3. 真实用户中奖弹窗触发时，延迟刷新以同步最新真实数据
 $(document).ready(function() {
-    loadRewardsFromStorage();
-
     const prizeModal = document.getElementById('prize');
     if (prizeModal) {
         const observer = new MutationObserver(function(mutations) {
             mutations.forEach(function(mutation) {
                 if (mutation.attributeName === "class" && !prizeModal.classList.contains('hide')) {
                     setTimeout(() => {
-                        let rawCode = $('#usercode').text().trim();
-                        if (rawCode.includes('-')) {
-                            rawCode = rawCode.split('-').pop().trim();
-                        }
-                        const finalCode = rawCode || generateRandomCode();
-
-                        const popupTitle = $('#reward-title').text().trim();
-                        
-                        // 获取被锁定的唯一奖品
-                        const lockedPrize = getLockedPrize(finalCode, popupTitle);
-                        
-                        addNewRewardToTop(finalCode, lockedPrize);
-                    }, 100);
+                        fetchLatestRewards();
+                    }, 1000);
                 }
             });
         });
