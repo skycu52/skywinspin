@@ -1,553 +1,159 @@
-<!DOCTYPE html>
-<!-- saved from url=(0014)about:internet -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="LUCKY SPINNER">
-  <title>LUCKY SPINNER - SKYWIN</title>
-  <link href="./css/main2.css" rel="stylesheet">
-  <link href="./css/animate.min.css" rel="stylesheet">
-  <style>
-    .balance {
-        font-size: 18px;
-        font-weight: 700;
-        color: #ffe500;
-        padding: 16px 0;
-    }
-  </style>
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Lucky Spin</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="description" content="Lucid Bootstrap 4.1.1 Admin Template">
+    <meta name="author" content="WrapTheme, design by: ThemeMakker.com">
+
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <!-- VENDOR CSS -->
+    <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    
+
+
+    <!-- Spin Board CSS & JS -->
+    <link rel="stylesheet" href="/css/spinBoard/style.css" />
+    <script type="text/javascript" src="/js/spinBoard/Winwheel.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
 
-<body class="text-center" style="">
+<body>
 
-  <!-- <div id="warning-message">
-    <div data-icon="Z" class="icon customsg">
-      <p>Please change your device or browser to landscape mode</p>
-    </div>
-  </div> -->
-
-  <div class="flexbkg">
+    
+<div align="center" class="flexbkg">
     <div class="cover-container d-flex w-100 p-3 mx-auto flex-column">
-
-      <!--main  -->
-      <main role="main" class="inner cover" style="zoom: 0.8;">
-
-        <!-- brandboard -->
-        <section class="sec-header">
-          <div class="container">
-            <!-- brand logo -->
-          <div class="branding mx-auto">
-            <img src="./img/kcspin.gif">
-          </div>
-          <div class="signboard mx-auto"><img src="./img/signboard.png"></div>
-          </div>
-        </section>
-        <!-- end brandboard -->
-        
-        <!-- spinner -->
-        <div class="wheelbkg">
-          <div class="wheelpointer">
-            <img src="./LUCKY SPINNER - SKYWIN_files/pin.png">
-          </div>
-          <div class="spinbrand">
-            <img src="./LUCKY SPINNER - SKYWIN_files/imgspinbrand.png">
-          </div>
-          <canvas id="canvas" width="480" height="480">
-            <p style="color: #fff" align="center">Sorry, your browser doesn't support.</p>
-          </canvas>
-          <a href="https://skywin.asia/#" id="spinbutton" class="active animate__animated animate__pulse animate__infinite" onclick="checkcode(event);"><img src="./LUCKY SPINNER - SKYWIN_files/blank.png"></a>
-        </div>
-        <!-- end spinner -->
-
-      </main>
-      <!--end main  -->
-
-    </div>
-  <!-- credit display -->
-    <div class="balance" id="remainingSpins">
-      Credits: 0 Left
-    </div>
-  <!-- end credit display -->
- <!-- live trans -->
-    <section class="livetrans">
-      <div class="container">        
-        <div class="scrollframe">
-          <div class="table-container">
-            <table class="table table-dark">
-              <thead>
-                <tr>
-                  <th colspan="2">Latest Claimed Rewards</th>
-                </tr>
-              </thead>
-              <tbody id="random-content">
-                <!-- Content will be live here -->
-                
-                  
-                                                                                                      <tr class="rdm">
-                          <th class="code">6QxXZ87t</th>
-                          <td class="reward">Free Credit RM17</td>
-                        </tr>
-                                                                                                                                                      <tr class="rdm">
-                          <th class="code">jspBPQKu</th>
-                          <td class="reward">Free Credit RM17</td>
-                        </tr>
-                                                                                                                <tr class="rdm">
-                          <th class="code">jspBPQKu</th>
-                          <td class="reward">Free Credit RM27</td>
-                        </tr>
-                                                                                                                <tr class="rdm">
-                          <th class="code">jspBPQKu</th>
-                          <td class="reward">Free Credit RM10</td>
-                        </tr>
-                                                                                                                                                      <tr class="rdm">
-                          <th class="code">xgWabkcK</th>
-                          <td class="reward">RM50 Get RM88</td>
-                        </tr>
-                                                                                                                                                      <tr class="rdm">
-                          <th class="code">ClqFx89Y</th>
-                          <td class="reward">Free Credit RM10</td>
-                        </tr>
-                                                                                                                                                      <tr class="rdm">
-                          <th class="code">b3sdtihM</th>
-                          <td class="reward">Free Credit RM10</td>
-                        </tr>
-                                                                                                                                                      <tr class="rdm">
-                          <th class="code">ZvPLOwQD</th>
-                          <td class="reward">Topup Bonus 20%</td>
-                        </tr>
-                                                                                                                                                      <tr class="rdm">
-                          <th class="code">8BR0HLSu</th>
-                          <td class="reward">Free Credit RM37</td>
-                        </tr>
-                                                                                                                                                      <tr class="rdm">
-                          <th class="code">cgUzeEGY</th>
-                          <td class="reward">Free Credit RM27</td>
-                        </tr>
-                                                                                                                                                                      </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- end live trans -->
-<!-- how to play -->
-<section class="howtoplay">
-  <div class="container">
-    <h2 class="mb-3">How to Play</h2>
-    <div class="row">
-      <div class="col-md-4">
-        <div class="infoframe">
-          <img src="./img/step-01.png">
-          <h4>01 Get Code</h4>
-          <p>Request code from CS</p>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="infoframe">
-          <img src="./img/step-02.png">
-          <h4>02 Spin &amp; Play</h4>
-          <p>Enter code to spin</p>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="infoframe">
-          <img src="./img/step-03.png">
-          <h4>03 Get Reward</h4>
-          <p>Claim reward from CS</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- end how to play -->
-
-<!-- footer -->
-<section class="footer">
-  
-  <div class="socials mx-auto">
-            <a href="https://api.whatsapp.com/send?phone=60147209463" class="socialbtn" data-toggle="tooltip" title="" data-original-title="WhatsApp Customer Service"><img src="./LUCKY SPINNER - SKYWIN_files/1750482005_1748104847_social-wa.svg"></a>
-            <a href="http://t.me/SW77Gina" class="socialbtn" data-toggle="tooltip" title="" data-original-title="Telegram Customer Service"><img src="./LUCKY SPINNER - SKYWIN_files/1750482047_social-tg.svg"></a>
-      </div>
-<p class="copyrights">Copyrights@2025 SKYWIN. All Rights Reserved.</p>
-</section>
-<!-- end footer -->
-
-      <!-- code Modal -->
-      <div class="modal fade" id="modalone" tabindex="-1" role="dialog" aria-labelledby="modalcode" aria-hidden="true" style="display: none;">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <!-- <h5 class="modal-title" id="modalcodelabel">Enter Code To Play</h5> -->
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
+        <div role="main" class="inner cover" style="zoom: 0.8;">
+            <section class="sec-header">
+                <div class="container">
+                    <div class="branding mx-auto">
+                        <img src="/images/spinBoard/kcspin.gif" />
+                    </div>
+                    <div class="signboard mx-auto">
+                        <img src="/images/spinBoard/signboard.png" />
+                    </div>
+            </section>
+            <div class="wheelbkg">
+                <div class="wheelpointer"><img src="/images/spinBoard/pin.png" /></div>
+                <div class="spinbrand"><img src="/images/spinBoard/imgspinbrand.png" /></div>
+                <canvas id="canvas" width="380" height="380">
+                    <p style="{color: white}" align="center">Sorry, your browser doesn't support canvas. Please try another.</p>
+                </canvas>
+                <a href="#" id="spinbutton" class="active animate__animated animate__pulse animate__infinite"></a>
             </div>
-            <form id="formcode">
-            <div class="modal-body">
-              <p class="lead">Enter code to play &amp; win</p>
-                <div class="form-group">
-                  <!-- <label for="inputcode">Code</label> -->
-                  <input type="text" class="form-control" id="inputcode" placeholder="Enter code...">
+
+        </div>
+    </div>
+
+
+    <section class="howtoplay">
+        <div class="container">
+            <h2 class="mb-3">How to Play</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="infoframe">
+                        <img src="/images/spinBoard/step-01.png" />
+                        <h4>01 Get Code</h4>
+                        <p>Request code from CS</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="infoframe">
+                        <img src="/images/spinBoard/step-02.png" />
+                        <h4>02 Spin & Play</h4>
+                        <p>Enter code to spin</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="infoframe">
+                        <img src="/images/spinBoard/step-03.png" />
+                        <h4>03 Get Reward</h4>
+                        <p>Claim reward from CS</p>
+                    </div>
                 </div>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary btn-block" data-dismiss="modal" onclick="spintoplay()">Play Now</button>
-            </div>
-          </form>
-          </div>
         </div>
-      </div>
+    </section>
 
-      <!-- price Modal -->
-      <div class="modal fade" id="modaltwo" tabindex="-1" role="dialog" aria-labelledby="modalreward" aria-hidden="true">
+    <footer class="footer text-muted">
+        <div class="socials mx-auto">
+            <a href="https://wa.me/601120630173/" target="_blank" class="socialbtn" data-toggle="tooltip" data-original-title="+60 11 206 30173">
+                <img src="/images/spinBoard/social-wa.svg" />
+            </a>
+        </div>
+        <div class="text-center">
+            Copyrights &copy; 2024. All Rights Reserved.
+        </div>
+    </footer>
+
+    <div id="bgBlur" class="background-blur hide"></div>
+
+    <div id="prize" class="wrapper animate__animated animate__bounceIn hide">
+        <a href="#" id="closeprize"></a>
+
+        <div class="reward-container">
+            <h2 id="usercode"></h2>
+            <br/>
+            <h3>You have Won</h3>
+            <h2 id="reward-title"></h2>
+            <img src="/images/spinBoard/gift.png" class="imgreward animate__animated animate__tada animate__infinite" />
+            <p class="prizenote"><b>Note: Please screenshot this screen and Whatsapp to us</b></p>
+            <img src="/images/spinBoard//reward-btn.png" id="rewardbutton" class="imgclaim animate__animated animate__pulse animate__infinite" />
+        </div>
+    </div>
+
+    <!-- code Modal -->
+    <div class="modal fade" id="modalone" tabindex="-1" role="dialog" aria-labelledby="modalcode" aria-hidden="true">
         <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <!-- <h5 class="modal-title" id="modalrewardlabel">Congratulation</h5> -->
-              <img src="./LUCKY SPINNER - SKYWIN_files/gift.png" class="imgreward">
-              <button type="button" class="close" data-dismiss="modal" onclick="resetWheel()" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="lead">Enter code to play & win</p>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="inputcode" placeholder="Enter code..." maxlength="30">
+                    </div>
+                    <p class="error-message mt-1"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-block" id="playbutton">Play Now</button>
+                </div>
             </div>
-            <div class="modal-body">
-              <p>Congratulation! You have won <span id="rewardlabel"></span>. Your code is <span id="voucherCode"></span>. Claim your reward now from customer service!</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary btn-block" data-dismiss="modal" onclick="resetWheel()">Close</button>
-            </div>
-          </div>
         </div>
-      </div>
+    </div>
+</div>
 
-  </div>
+<script type="text/javascript">
+    // Serialize the model data to JSON and assign it to a JavaScript variable
+    var modelData = [{"rewarD_ID":"45","rewarD_TITLE":"FREE CREDIT RM38","reC_TYPE":"1","probability":null},{"rewarD_ID":"46","rewarD_TITLE":"FREE CREDIT RM28","reC_TYPE":"1","probability":null},{"rewarD_ID":"47","rewarD_TITLE":"FREE CREDIT RM58","reC_TYPE":"1","probability":null},{"rewarD_ID":"48","rewarD_TITLE":"FREE CREDIT RM7","reC_TYPE":"1","probability":null},{"rewarD_ID":"49","rewarD_TITLE":"FREE CREDIT RM128","reC_TYPE":"1","probability":null},{"rewarD_ID":"50","rewarD_TITLE":"FREE CREDIT RM18","reC_TYPE":"1","probability":null},{"rewarD_ID":"51","rewarD_TITLE":"ANGPAU RM 888","reC_TYPE":"1","probability":null},{"rewarD_ID":"52","rewarD_TITLE":"TOPUP BONUS 20%","reC_TYPE":"1","probability":null}];
 
-  <script src="./js/jquery-3.3.1.min.js.download" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script src="./js/popper.min.js.download"></script>
-  <script src="./js/bootstrap.min.js.download"></script>
-  <script src="./js/winwheel.js.download"></script>
-  <script src="./js/tweenmax.min.js.download"></script>
-  <script src="./js/axios.min.js.download"></script>
-  <script>
-    let wheelObj = [];
-    let theWheel;
-    let voucherCodeDisplay = '';
-    
-    $.ajax({
-        url: "https://skywin.asia/api/v1/getPrizesPublic",
-        method: 'GET',
-        dataType: 'json',
-        success: function(data) {
-          // console.log(data);
-          if (data.length > 0)
-          {
-              for(let i=0; i<data.length; i++)
-              {
-                  let fillStyle = (i % 2 !== 0) ? '#000000' : '#ffdd02';
-                  let textFillStyle = (i % 2 !== 0) ? '#ffdd02' : '#333333';
-                  let Wheel = { fillStyle: fillStyle, textFillStyle: textFillStyle, text: data[i].name }
-                  wheelObj.push(Wheel)
-              }
-              
-              // console.log(wheel)
-              var spinsize = 0;
-              var spinfont = 0;
-
-              if ($(window).width() < 576) {
-                spinsize = 220;
-                spinfont = 16;
-              } else {
-                spinsize = 240;
-                spinfont = 16;
-              };
-
-              // Create new wheel object specifying the parameters at creation time.
-              theWheel = new Winwheel({
-                'numSegments': 10, // Specify number of segments.
-                'outerRadius': spinsize, // Set outer radius so wheel fits inside the background.
-                'innerRadius': 10,   
-                'lineWidth': 0,
-                'textMargin': 20,
-                //'outerRadius' : 240,
-                'centerX'      : 240,       // Used to position on the background correctly.
-                'centerY'      : 240,
-                'textAlignment': 'center',
-                'textFontSize': spinfont, // Set font size as desired.
-                'segments': wheelObj,
-                'strokeStyle'       : '#000000',
-                'lineWidth'         : 0, 
-                'animation': // Specify the animation to use.
-                {
-                  'type': 'spinToStop',
-                  'duration': 5, // Duration in seconds.
-                  'spins': 8, // Number of complete spins.
-                  'callbackFinished': alertPrizeTwo
-                  // 'callbackSound'    : playSound
-                }
-              });
-          }
-        },
-        error: function(xhr, status, error) {
-          console.log(error);
-        }
-    });
-
-    // Vars used by the code in this page to do power controls.
-    var wheelPower = 0;
-    var spinCredit = 0;
-    var spincode = '111111';
-    var wheelSpinning = false;
-    var winningSegment = '';
-    let voucherCodeName = '';
-
-    // -------------------------------------------------------
-    // Click handler for spin button.
-    // -------------------------------------------------------
-    function startSpin() {
-        console.log('startSpin');
-      // Ensure that spinning can't be clicked again while already running.
-      if (wheelSpinning == false) {
-
-        document.getElementById('spinbutton').className = "disabled";
-
-        if (spinCredit == 0) {
-          // This formula always makes the wheel stop somewhere inside prize 3 at least
-          // 1 degree away from the start and end edges of the segment. 
-          // stop at macbook pro  
-          var stopAt = (46 + Math.floor((Math.random() * 43)))
-        } else if (spinCredit == 1) {
-          // stop at sony ps4  
-          var stopAt = (181 + Math.floor((Math.random() * 43)))
-        }
-
-        // Important thing is to set the stopAngle of the animation before stating the spin.
-        theWheel.animation.stopAngle = stopAt;
-
-        // Begin the spin animation by calling startAnimation on the wheel object.
-        theWheel.startAnimation();
-
-        spinCredit++;
-
-        // Set to true so that power can't be changed and spin button re-enabled during
-        // the current animation. The user will have to reset before spinning again.
-        wheelSpinning = true;
-      }
-      // $('.customalert').remove();
-    }
-
-    function checkcode(event) {
-      if (event) {
-        event.preventDefault();
-      }
-      let code = $('#inputcode').val();
-      if (wheelSpinning == false && code === '') {
-        $('#modalone').modal({
-          backdrop: 'static',
-          keyboard: false
-        })
-      }
-      else if (wheelSpinning == false && code !== '') {
-        spintoplay();
-      }
-      else {
-        alert('Please wait for the current spin to finish.');
-      }
-    }
-
-    function spintoplay() {
-        voucherCodeDisplay = '';
-        // Get input code
-        var code = $('#inputcode').val();
-        voucherCodeDisplay = code;
-        // console.log({code});
-
-        // Ensure that spinning can't be clicked again while already running.
-        if (wheelSpinning == false) {
-
-            document.getElementById('spinbutton').className = "disabled";
-            
-            axios.post("https://skywin.asia/api/v1/claimCode", {
-              data: {
-                code: code
-              },
-              headers: {
-                'Content-Type': 'application/json; charset=utf-8'
-              }
-            })
-            .then(function (response) {
-                // console.log(response.data.success);
-                
-                // fixed at get price macbook pro - 46
-                // console.log({stopAt})
-                var stopAt = response.data.success; // (86 + Math.floor((Math.random() * 43)))
-                let remainingCredit = response.data.remainingSpins;
-                voucherCodeName = response.data.voucherCodeName;
-                $('#remainingSpins').text(`Credits: ${remainingCredit} Left`);
-
-                theWheel.animation.stopAngle = stopAt;
-                // Begin the spin animation by calling startAnimation on the wheel object.
-                theWheel.startAnimation();
-
-                // Set to true so that power can't be changed and spin button re-enabled during
-                // the current animation. The user will have to reset before spinning again.
-                wheelSpinning = true;
-
-                if (remainingCredit == 0) {
-                  $('#inputcode').val('');
-                }
-            })
-            .catch(function (error) {
-                console.error(error);
-                console.error(error.response.data.error);
-                if (error.response.data.error)
-                {
-                    $('#inputcode').val('');
-                    alert(error.response.data.error);
-                }
-                document.getElementById('spinbutton').className = "active";
-            });
-        }
-        // $('.customalert').remove();
-    }
-
-    // Reset
-    function resetWheel() {
-      theWheel.stopAnimation(false); // Stop the animation, false as param so does not call callback function.
-      theWheel.rotationAngle = 0; // Re-set the wheel angle to 0 degrees.
-      theWheel.draw();
-
-      wheelSpinning = false; // Reset to false to power buttons and spin can be clicked again.
-
-      document.getElementById('spinbutton').className = "active animate__animated animate__pulse animate__infinite";
-      
-      $(".imgreward").removeClass("animate__animated animate__heartBeat animate__infinite");
-    }
-
-    // Loads the tick audio sound in to an audio object.
-    let audio = new Audio("https://skywin.asia/spinner/audio/spin2.mp3");
-
-    // This function is called when the sound is to be played.
-    function playSound() {
-      // Stop and rewind the sound if it already happens to be playing.
-      audio.pause();
-      audio.currentTime = 0;
-
-      // Play the sound.
-      audio.play();
-    }
-   
-    // Winning alert message
-    function alertPrizeTwo() {
-      console.log("alertPrizeTwo");
-      $('#modaltwo').modal({
-          backdrop: 'static',
-          keyboard: false
-        })
-
-        winningSegment = theWheel.getIndicatedSegment();
-        $("#rewardlabel").text(winningSegment.text);
-        $("#voucherCode").text(voucherCodeDisplay);
-        $(".imgreward").addClass("animate__animated animate__heartBeat animate__infinite");
-        updateTable(voucherCodeDisplay, winningSegment.text);
-    }
-    
-    function updateTable(code, reward) {
-        const tbody = $('#random-content');
-        
-        if (tbody.find('tr').length >= 10) {
-            tbody.find('tr:last').remove();
-        }
-        
-        const newRow = `
-            <tr class="rdm">
-                <th class="code">${code}</th>
-                <td class="reward">${reward}</td>
-            </tr>
-        `;
-        
-        // Append new row to tbody
-        tbody.prepend(newRow);
-    }
-    
-  </script>
-  <script>
-    function doOnOrientationChange() {
-      switch (window.orientation) {
-        case -90 || 90:
-          $('.inner.cover').css('zoom', 0.5);
-          break;
-        default:
-          $('.inner.cover').css('zoom', 0.8);
-          break;
-      }
-    };
-
-    window.addEventListener('orientationchange', doOnOrientationChange);
-
-    $(function () {
-      doOnOrientationChange();
-    });
-
-    $('[data-toggle="tooltip"]').tooltip();
-    
-    // $('#spinbutton').hover(function(e){
-    //   if ($(this).hasClass('active')) {
-    //     $(this).toggleClass("animate__animated animate__tada");
-    //     e.preventDefault();
-    //   }
-    //});
-    
-    $( "#spinbutton" ).hover(function() {
-      $(this).removeClass("animate__animated animate__pulse animate__infinite");
-      $(this).addClass("animate__animated animate__tada animate__infinite");
-    }, function() {
-      $(this).removeClass("animate__animated animate__tada animate__infinite");
-      $(this).addClass("animate__animated animate__pulse animate__infinite");
-    }
-    );
-  </script>
- <script>
-  // Array of possible reward values
-  const rewardValues = [
-    "Free credit RM28",
-    "Free credit RM118",
-    "Free credit RM68",
-    "Free credit RM18",
-    "Free credit RM8",
-    "Cash prize RM388",
-    "Deposit bonus 50%",
-    "Deposit bonus 20%"
-  ];
-
-  // Function to generate a random code
-  function generateRandomCode() {
-    const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
-    let code = "";
-    for (let i = 0; i < 8; i++) {
-      const randomIndex = Math.floor(Math.random() * characters.length);
-      code += characters.charAt(randomIndex);
-    }
-    return code;
-  }
-
-  // Generate and insert 5 rows of random content into the tbody element
-  // const tbody = document.getElementById("random-content");
-
-  // for (let i = 0; i < 5; i++) {
-  //   const randomRewardIndex = Math.floor(Math.random() * rewardValues.length);
-  //   const randomReward = rewardValues[randomRewardIndex];
-  //   const randomCode = generateRandomCode();
-
-  //   const newRow = document.createElement("tr");
-  //   newRow.className = "rdm";
-  //   newRow.innerHTML = `
-  //     <th class="code">${randomCode}</th>
-  //     <td class="reward">${randomReward}</td>
-  //   `;
-
-  //   tbody.appendChild(newRow);
-  // }
+    $('.flexbkg').css('background-image', 'url("/images/spinBoard/background.jpg")');
+    $('.cover-container').css('background-image', 'url("/images/spinBoard/stage.png")');
 </script>
 
 
 
+    <!-- Javascript -->
+    <script src="/bundles/libscripts.bundle.js"></script>
+    <script src="/bundles/vendorscripts.bundle.js"></script>
 
-</body></html>
+    <script src="/bundles/mainscripts.bundle.js"></script>
+
+
+    <!-- Spin Board JS -->
+    <script src="/js/spinBoard/popper.min.js"></script>
+    
+    <script src="/js/spinBoard/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+
+</body>
+</html>
