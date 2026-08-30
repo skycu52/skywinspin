@@ -173,6 +173,53 @@
 <script src="/js/spinBoard/popper.min.js"></script>
 <script src="/js/spinBoard/script.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+<script>
+// 真实对应的 8 个转盘奖品
+const wheelPrizes = [
+    "RM9 CREDIT",
+    "RM50 GET RM66",
+    "RM28 CREDIT",
+    "BONUS 20%",
+    "RM68 CREDIT",
+    "LAST DEPOSIT 20%",
+    "CASH RM288",
+    "RM128 CREDIT"
+];
+
+// 随机生成一个类似真实兑换码的字符串
+function generateRandomCode() {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let code = "";
+    for (let i = 0; i < 8; i++) {
+        code += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return code;
+}
+
+// 核心更新逻辑
+function updateLatestRewards() {
+    const randomPrize = wheelPrizes[Math.floor(Math.random() * wheelPrizes.length)];
+    const rawCode = generateRandomCode();
+    // 打码处理，例如 6Q***87t
+    const maskedCode = rawCode.substring(0, 2) + "***" + rawCode.substring(5);
+
+    // 让表格内容往下滚动一位
+    for (let i = 3; i > 0; i--) {
+        const prevCode = document.querySelector(`#row-${i-1} .c-code`).innerText;
+        const prevPrize = document.querySelector(`#row-${i-1} .c-prize`).innerText;
+        document.querySelector(`#row-${i} .c-code`).innerText = prevCode;
+        document.querySelector(`#row-${i} .c-prize`).innerText = prevPrize;
+    }
+
+    // 把最新的中奖记录塞进最上面一行
+    document.querySelector('#row-0 .c-code').innerText = maskedCode;
+    document.querySelector('#row-0 .c-prize').innerText = randomPrize;
+}
+
+// 15 分钟更新一次 = 15 * 60 * 1000 毫秒 (900000 毫秒)
+const intervalTime = 15 * 60 * 1000; 
+setInterval(updateLatestRewards, intervalTime);
+</script>
 
 </body>
 </html>
