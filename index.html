@@ -43,26 +43,26 @@
                     <p style="{color: white}" align="center">Sorry, your browser doesn't support canvas. Please try another.</p>
                 </canvas>
                 <a href="#" id="spinbutton" class="active animate__animated animate__pulse animate__infinite"></a>
-
-                <div class="latest-rewards-box" style="width: 85%; max-width: 360px; margin: 10px auto 0 auto; background: #0d1b1e; border: 2px solid #ffe600; border-radius: 8px; overflow: hidden; position: relative; z-index: 99; box-shadow: 0 0 15px rgba(255,230,0,0.4);">
-                    <div style="background: #ffe600; color: #000; font-weight: bold; text-align: center; padding: 6px; font-size: 13px; letter-spacing: 0.5px;">Latest Claimed Rewards</div>
-                    <div style="padding: 4px 8px;">
-                        <div id="row-0" style="display: flex; justify-content: space-between; padding: 6px 4px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); font-size: 12px; color: #fff;">
-                            <span class="c-code">6QxXZ87t</span><span class="c-prize" style="color: #ffe600; font-weight: bold;">RM9 CREDIT</span>
-                        </div>
-                        <div id="row-1" style="display: flex; justify-content: space-between; padding: 6px 4px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); font-size: 12px; color: #fff;">
-                            <span class="c-code">jspBPQKu</span><span class="c-prize" style="color: #ffe600; font-weight: bold;">RM50 GET RM66</span>
-                        </div>
-                        <div id="row-2" style="display: flex; justify-content: space-between; padding: 6px 4px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); font-size: 12px; color: #fff;">
-                            <span class="c-code">mK9pW2x</span><span class="c-prize" style="color: #ffe600; font-weight: bold;">RM28 CREDIT</span>
-                        </div>
-                        <div id="row-3" style="display: flex; justify-content: space-between; padding: 6px 4px; font-size: 12px; color: #fff;">
-                            <span class="c-code">8XyL41q</span><span class="c-prize" style="color: #ffe600; font-weight: bold;">BONUS 20%</span>
-                        </div>
-                    </div>
-                </div>
             </div>
+        </div>
+    </div>
 
+    <!-- 【已移到转盘外部下方】完美避开按钮，绝不遮挡 -->
+    <div class="latest-rewards-box" style="width: 85%; max-width: 360px; margin: 20px auto; background: #0d1b1e; border: 2px solid #ffe600; border-radius: 8px; overflow: hidden; position: relative; z-index: 10; box-shadow: 0 0 15px rgba(255,230,0,0.4);">
+        <div style="background: #ffe600; color: #000; font-weight: bold; text-align: center; padding: 6px; font-size: 13px; letter-spacing: 0.5px;">Latest Claimed Rewards</div>
+        <div style="padding: 4px 8px;">
+            <div id="row-0" style="display: flex; justify-content: space-between; padding: 6px 4px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); font-size: 12px; color: #fff;">
+                <span class="c-code">6QxXZ87t</span><span class="c-prize" style="color: #ffe600; font-weight: bold;">RM9 CREDIT</span>
+            </div>
+            <div id="row-1" style="display: flex; justify-content: space-between; padding: 6px 4px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); font-size: 12px; color: #fff;">
+                <span class="c-code">jspBPQKu</span><span class="c-prize" style="color: #ffe600; font-weight: bold;">RM50 GET RM66</span>
+            </div>
+            <div id="row-2" style="display: flex; justify-content: space-between; padding: 6px 4px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); font-size: 12px; color: #fff;">
+                <span class="c-code">mK9pW2x</span><span class="c-prize" style="color: #ffe600; font-weight: bold;">RM28 CREDIT</span>
+            </div>
+            <div id="row-3" style="display: flex; justify-content: space-between; padding: 6px 4px; font-size: 12px; color: #fff;">
+                <span class="c-code">8XyL41q</span><span class="c-prize" style="color: #ffe600; font-weight: bold;">BONUS 20%</span>
+            </div>
         </div>
     </div>
 
@@ -159,7 +159,6 @@
 <script src="/js/spinBoard/script.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
 <script>
-// 真实对应的 8 个转盘奖品
 const wheelPrizes = [
     "RM9 CREDIT",
     "RM50 GET RM66",
@@ -171,7 +170,6 @@ const wheelPrizes = [
     "RM128 CREDIT"
 ];
 
-// 随机生成一个类似真实兑换码的字符串
 function generateRandomCode() {
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     let code = "";
@@ -181,14 +179,11 @@ function generateRandomCode() {
     return code;
 }
 
-// 核心更新逻辑
 function updateLatestRewards() {
     const randomPrize = wheelPrizes[Math.floor(Math.random() * wheelPrizes.length)];
     const rawCode = generateRandomCode();
-    // 打码处理，例如 6Q***87t
     const maskedCode = rawCode.substring(0, 2) + "***" + rawCode.substring(5);
 
-    // 让表格内容往下滚动一位
     for (let i = 3; i > 0; i--) {
         const prevCode = document.querySelector(`#row-${i-1} .c-code`).innerText;
         const prevPrize = document.querySelector(`#row-${i-1} .c-prize`).innerText;
@@ -196,12 +191,10 @@ function updateLatestRewards() {
         document.querySelector(`#row-${i} .c-prize`).innerText = prevPrize;
     }
 
-    // 把最新的中奖记录塞进最上面一行
     document.querySelector('#row-0 .c-code').innerText = maskedCode;
     document.querySelector('#row-0 .c-prize').innerText = randomPrize;
 }
 
-// 15 分钟更新一次 = 15 * 60 * 1000 毫秒 (900000 毫秒)
 const intervalTime = 15 * 60 * 1000; 
 setInterval(updateLatestRewards, intervalTime);
 </script>
