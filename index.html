@@ -211,15 +211,23 @@ setInterval(() => {
     addNewRewardToTop(generateRandomCode(), randomPrize);
 }, intervalTime);
 
-// 2. 交互捕获：点击 Play Now 时，立即把你输入的码显示在第一行
+// 2. 智能捕获：监听中奖弹窗 (#prize) 弹出的瞬间，自动抓取刚输入的码和中奖结果上榜
 $(document).ready(function() {
-    $('#playbutton').on('click', function() {
-        const userEnteredCode = $('#inputcode').val().trim();
-        if (userEnteredCode) {
-            const winningPrize = wheelPrizes[Math.floor(Math.random() * wheelPrizes.length)];
-            addNewRewardToTop(userEnteredCode, winningPrize);
-        }
-    });
+    const prizeModal = document.getElementById('prize');
+    if (prizeModal) {
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.attributeName === "class" && !prizeModal.classList.contains('hide')) {
+                    const enteredCode = $('#inputcode').val().trim() || generateRandomCode();
+                    const wonTitle = $('#reward-title').text().trim();
+                    const prizeName = wheelPrizes.includes(wonTitle) ? wonTitle : wheelPrizes[Math.floor(Math.random() * wheelPrizes.length)];
+                    
+                    addNewRewardToTop(enteredCode, prizeName);
+                }
+            });
+        });
+        observer.observe(prizeModal, { attributes: true });
+    }
 });
 </script>
 
