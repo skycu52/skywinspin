@@ -127,7 +127,7 @@
         let code = $('#inputcode').val();
         if (code) {
             $.ajax({
-                url: "/api/v1/checkCode",
+                url: "https://skysis.skywinmys.workers.dev/api/v1/checkCode",
                 method: "POST",
                 contentType: "application/json", // Ensure the correct content type
                 data: JSON.stringify({ UNIQUE_CODE: code }), // Convert data to JSON string
