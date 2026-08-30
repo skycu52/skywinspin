@@ -160,7 +160,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
 
 <script>
-// 8个真实的转盘奖品
 const wheelPrizes = [
     "RM9 CREDIT",
     "RM50 GET RM66",
@@ -172,7 +171,6 @@ const wheelPrizes = [
     "RM128 CREDIT"
 ];
 
-// 随机生成假兑换码
 function generateRandomCode() {
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     let code = "";
@@ -182,14 +180,12 @@ function generateRandomCode() {
     return code;
 }
 
-// 兑换码打码处理（如 ab***gh）
 function maskCode(code) {
     if (!code || code.length < 4) return "User***88";
     if (code.length <= 4) return code.substring(0, 1) + "***" + code.substring(code.length - 1);
     return code.substring(0, 2) + "***" + code.substring(code.length - 2);
 }
 
-// 将最新中奖记录推到表格第一行，旧数据往下滚动
 function addNewRewardToTop(rawCode, prizeName) {
     const masked = maskCode(rawCode);
 
@@ -204,25 +200,33 @@ function addNewRewardToTop(rawCode, prizeName) {
     document.querySelector('#row-0 .c-prize').innerText = prizeName;
 }
 
-// 1. 定时任务：每隔 15 分钟自动随机滚动一条
+// 15分钟自动随机滚动
 const intervalTime = 15 * 60 * 1000; 
 setInterval(() => {
     const randomPrize = wheelPrizes[Math.floor(Math.random() * wheelPrizes.length)];
     addNewRewardToTop(generateRandomCode(), randomPrize);
 }, intervalTime);
 
-// 2. 智能捕获：监听中奖弹窗 (#prize) 弹出的瞬间，自动抓取刚输入的码和中奖结果上榜
+// 终极拦截：直接监控用户点击 Play Now，并“强行”在转盘停下弹出中奖窗口时把输入的码顶上去
+let latestEnteredCode = "";
+
 $(document).ready(function() {
+    $('#playbutton').on('click', function() {
+        latestEnteredCode = $('#inputcode').val().trim();
+    });
+
     const prizeModal = document.getElementById('prize');
     if (prizeModal) {
         const observer = new MutationObserver(function(mutations) {
             mutations.forEach(function(mutation) {
                 if (mutation.attributeName === "class" && !prizeModal.classList.contains('hide')) {
-                    const enteredCode = $('#inputcode').val().trim() || generateRandomCode();
+                    // 如果有刚才保存的输入码就用它，没有就随机生成一个兜底
+                    const codeToUse = latestEnteredCode || generateRandomCode();
                     const wonTitle = $('#reward-title').text().trim();
                     const prizeName = wheelPrizes.includes(wonTitle) ? wonTitle : wheelPrizes[Math.floor(Math.random() * wheelPrizes.length)];
                     
-                    addNewRewardToTop(enteredCode, prizeName);
+                    addNewRewardToTop(codeToUse, prizeName);
+                    latestEnteredCode = ""; // 用完清空
                 }
             });
         });
