@@ -186,6 +186,35 @@ function maskCode(code) {
     return code.substring(0, 2) + "***" + code.substring(code.length - 2);
 }
 
+// 保存当前表格数据到浏览器的 LocalStorage
+function saveRewardsToStorage() {
+    let rowsData = [];
+    for (let i = 0; i < 4; i++) {
+        const code = document.querySelector(`#row-${i} .c-code`).innerText;
+        const prize = document.querySelector(`#row-${i} .c-prize`).innerText;
+        rowsData.push({ code: code, prize: prize });
+    }
+    localStorage.setItem('saved_latest_rewards', JSON.stringify(rowsData));
+}
+
+// 页面加载时，自动从 LocalStorage 恢复数据
+function loadRewardsFromStorage() {
+    const saved = localStorage.getItem('saved_latest_rewards');
+    if (saved) {
+        try {
+            const rowsData = JSON.parse(saved);
+            for (let i = 0; i < rowsData.length; i++) {
+                if (document.querySelector(`#row-${i} .c-code`)) {
+                    document.querySelector(`#row-${i} .c-code`).innerText = rowsData[i].code;
+                    document.querySelector(`#row-${i} .c-prize`).innerText = rowsData[i].prize;
+                }
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    }
+}
+
 function addNewRewardToTop(rawCode, prizeName) {
     const masked = maskCode(rawCode);
 
@@ -198,7 +227,15 @@ function addNewRewardToTop(rawCode, prizeName) {
 
     document.querySelector('#row-0 .c-code').innerText = masked;
     document.querySelector('#row-0 .c-prize').innerText = prizeName;
+
+    // 每次更新后立刻持久化保存
+    saveRewardsToStorage();
 }
+
+// 页面一打开就先恢复之前保存的数据
+document.addEventListener("DOMContentLoaded", function() {
+    loadRewardsFromStorage();
+});
 
 // 15分钟自动随机滚动
 const intervalTime = 15 * 60 * 1000; 
@@ -207,17 +244,17 @@ setInterval(() => {
     addNewRewardToTop(generateRandomCode(), randomPrize);
 }, intervalTime);
 
-// 终极精准拦截：直接抓取弹窗里的 #usercode 和 #reward-title
+// 抓取弹窗中的中奖信息
 $(document).ready(function() {
+    loadRewardsFromStorage(); // 确保JQ就绪时也加载一次
+
     const prizeModal = document.getElementById('prize');
     if (prizeModal) {
         const observer = new MutationObserver(function(mutations) {
             mutations.forEach(function(mutation) {
                 if (mutation.attributeName === "class" && !prizeModal.classList.contains('hide')) {
-                    // 延迟 100 毫秒确保原网页的 script.js 已经把中奖码填进 #usercode 里了
                     setTimeout(() => {
                         let rawCode = $('#usercode').text().trim();
-                        // 如果 #usercode 里包含 "Code -" 这类字眼，把它清洗掉只留纯兑换码
                         if (rawCode.includes('-')) {
                             rawCode = rawCode.split('-').pop().trim();
                         }
